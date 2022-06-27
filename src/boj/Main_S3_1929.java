@@ -1,33 +1,38 @@
 package boj;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 public class Main_S3_1929 {
 
 	public static void main(String[] args) throws Exception {
-		Scanner sc = new Scanner(System.in);
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
-		int M = sc.nextInt();
-		int N = sc.nextInt();
-		
-		for (int i = M; i <= N; i++) {
-			if (i == 1)
-				continue;
-			else if (i == 2)
-				System.out.println(i);
-			else if (isPrime(i))
-				System.out.println(i);
+		int T = Integer.parseInt(br.readLine());;
+		for (int tc = 0; tc < T; tc++) {
+			int N = Integer.parseInt(br.readLine());;
+			int[][] arr = new int[N+1][2];
+			
+			for (int i = 0; i <= N; i++) {
+				if (i == 0) {
+					arr[i][0] = 1;
+					arr[i][1] = 0;
+				} else if (i == 1) {
+					arr[i][0] = 0;
+					arr[i][1] = 1;
+				} else {
+					arr[i][0] = arr[i-1][0] + arr[i-2][0];
+					arr[i][1] = arr[i-1][1] + arr[i-2][1];
+				}
+			}
+			bw.write(arr[N][0] + " " + arr[N][1]);
+			bw.newLine();
 		}
-		
-	}
-
-	private static boolean isPrime(int i) {
-		int sqrt = (int)Math.ceil(Math.sqrt(i));
-		for (int j = 2; j <= sqrt; j++) {
-			if (i % j == 0)
-				return false;
-		}
-		return true;
+		bw.flush();
+		bw.close();
 	}
 	
 	
